@@ -1,0 +1,51 @@
+name: Build and push Docker images
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push backend image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./backend
+        file: ./backend/Dockerfile
+        push: true
+        platforms: linux/amd64,linux/arm64
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-backend:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-backend:${{ github.sha }}
+
+    - name: Build and push frontend image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./frontend
+        file: ./frontend/Dockerfile
+        push: true
+        platforms: linux/amd64,linux/arm64
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-frontend:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-frontend:${{ github.sha }}

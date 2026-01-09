@@ -1,0 +1,7 @@
+resources:
+- namespace.yaml
+- secret.yaml
+- ingress.yaml
+- frontend
+- backend
+- mongodb

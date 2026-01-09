@@ -1,0 +1,8 @@
+resources:
+- mongodb-deployment.yml
+- mongodb-service.yml
+- mongodb-pv.yml
+- mongodb-pvc.yml
+
+commonLabels:
+  app: mongodb
