@@ -1,0 +1,39 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: AppProject
+# metadata:
+#   name: chatapp-project
+#   namespace: argocd
+# spec:
+#   description: Project for ArgoCD Chat Application deployments
+#   sourceRepos:
+#   - 'https://github.com/YuvrajSoam/Argo-k8sproject.git'
+#   destinations:
+#   - namespace: chat-app
+#     server: 'https://kubernetes.default.svc'
+#   clusterResourceWhitelist:
+#   - group: '*'
+#     kind: '*'
+#   namespaceResourceWhitelist:
+#   - group: '*'
+#     kind: '*'
+
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: chatapp-project
+  namespace: argocd
+spec:
+  description: ChatApp Project (dev + prod)
+  sourceRepos:
+  - 'https://github.com/YuvrajSoam/Argo-k8sproject.git'
+  destinations:
+  - namespace: chat-app
+    server: 'https://kubernetes.default.svc'
+  - namespace: chat-app-prod
+    server: 'https://kubernetes.default.svc'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'

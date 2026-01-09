@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: chatapp-appset
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - env: dev
+        path: k8s/overlays/dev
+        namespace: chat-app
+      - env: prod
+        path: k8s/overlays/prod
+        namespace: chat-app-prod
+
+  template:
+    metadata:
+      name: chat-{{env}}
+    spec:
+      project: chatapp-project
+      source:
+        repoURL: https://github.com/YuvrajSoam/Argo-k8sproject.git
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
