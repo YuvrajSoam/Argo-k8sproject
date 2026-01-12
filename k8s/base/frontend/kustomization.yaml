@@ -1,6 +1,6 @@
 resources:
-- frontend-deployment.yaml
-- frontend-service.yaml
+- frontend-deployment.yml
+- frontend-service.yml
 
 commonLabels:
   app: frontend

@@ -1,6 +1,6 @@
 resources:
-- backend-deployment.yaml
-- backend-service.yaml
+- backend-deployment.yml
+- backend-service.yml
 
 commonLabels:
   app: backend
