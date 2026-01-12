@@ -1,6 +1,6 @@
 resources:
 - namespace.yml
-- secret.yml
+- secrets.yml
 - ingress.yml
 - frontend
 - backend
