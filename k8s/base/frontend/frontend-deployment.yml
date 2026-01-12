@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deployment
-  namespace: chat-app
   labels:
     app: frontend
 spec:
@@ -13,7 +12,6 @@ spec:
   template:
     metadata:
       name: frontend-pod
-      namespace: chat-app
       labels:
         app: frontend
     spec:
