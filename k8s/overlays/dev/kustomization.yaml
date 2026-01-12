@@ -14,7 +14,7 @@ resources:
 - ../../base
 
 patches:
-- path: backend/deployment-patch.yaml
-- path: frontend/deployment-patch.yaml
+- path: backend/patch-env.yaml
+- path: frontend/patch-env.yaml
 
 namespace: chat-app
