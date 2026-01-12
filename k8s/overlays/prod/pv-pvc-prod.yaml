@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: mongodb-pv-prod
 spec:
+  storageClassName: mongo-prod # added
   accessModes:
   - ReadWriteOnce
   capacity:
@@ -16,6 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mongodb-pvc-prod
 spec:
+  storageClassName: mongo-prod # added
   accessModes:
   - ReadWriteOnce
   resources:

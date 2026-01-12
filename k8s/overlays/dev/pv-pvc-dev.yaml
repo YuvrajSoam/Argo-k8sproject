@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: mongodb-pv-dev
 spec:
+  storageClassName: mongo-dev # ADD THIS
   accessModes:
   - ReadWriteOnce
   capacity:
@@ -10,12 +11,12 @@ spec:
   hostPath:
     path: /data/dev
 ---
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mongodb-pvc-dev
 spec:
+  storageClassName: mongo-dev # ADD THIS
   accessModes:
   - ReadWriteOnce
   resources:
