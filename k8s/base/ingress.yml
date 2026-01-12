@@ -5,8 +5,10 @@ metadata:
   labels:
     name: chatapp-ingress
   annotations:
-    ngnix.ingress.kubernetes.io/readwrite-target: /
-    ngnix.ingress.kubernetes.io/ssl-redirect: "false"
+    # ngnix.ingress.kubernetes.io/readwrite-target: /
+    # ngnix.ingress.kubernetes.io/ssl-redirect: "false"
+
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   rules:
   - host: chattws.com
