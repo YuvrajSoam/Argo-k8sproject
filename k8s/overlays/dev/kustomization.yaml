@@ -20,12 +20,9 @@ patches:
 - path: patch-mongo-pvc-dev.yaml
 
 images:
-- name: chat-app-frontend
-  newName: yuvrajsoam/chatapp-frontend
+- name: yuvrajsoam/chatapp-frontend
   newTag: v1.0.0
-
-- name: chat-app-backend
-  newName: yuvrajsoam/chatapp-backend
+- name: yuvrajsoam/chatapp-backend
   newTag: v1.0.0
 
 namespace: chat-app
