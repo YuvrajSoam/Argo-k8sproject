@@ -1,14 +1,14 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
 
-resources:
-- ../../base/frontend
+# resources:
+# - ../../base/frontend
 
-images:
-- name: frontend
-  newName: yuvrajsoam/chatapp-frontend
-  newTag: v1.0.3 # or latest, or semver, or stable
+# images:
+# - name: frontend
+#   newName: yuvrajsoam/chatapp-frontend
+#   newTag: v1.0.3 # or latest, or semver, or stable
 
-patchesStrategicMerge:
-- patch-env.yaml
-- patch-replicas.yaml
+# patchesStrategicMerge:
+# - patch-env.yaml
+# - patch-replicas.yaml
