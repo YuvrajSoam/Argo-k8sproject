@@ -10,12 +10,13 @@ kind: Kustomization
 
 resources:
 - ../../base
-- pv-pvc.yaml
+- pv-pvc-prod.yaml
 
 patches:
 - path: backend/patch-env.yaml
 - path: frontend/patch-env.yaml
 - path: backend/patch-replicas.yaml
 - path: frontend/patch-replicas.yaml
+- path: patch-mongo-pvc-prod.yaml
 
 namespace: chat-app-prod

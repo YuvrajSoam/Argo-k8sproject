@@ -12,10 +12,11 @@
 
 resources:
 - ../../base
-- pv-pvc.yaml
+- pv-pvc-dev.yaml
 
 patches:
 - path: backend/patch-env.yaml
 - path: frontend/patch-env.yaml
+- path: patch-mongo-pvc-dev.yaml
 
 namespace: chat-app

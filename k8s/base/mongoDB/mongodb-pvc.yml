@@ -8,3 +8,10 @@
 #   resources:
 #     requests:
 #       storage: 5Gi
+
+# PV fields like hostPath.path are immutable — patching them causes:
+
+# Forbidden: spec.persistentvolumesource is immutable
+
+
+# So overlay must create separate PV/PVC resources.
