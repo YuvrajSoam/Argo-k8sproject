@@ -1,10 +1,10 @@
-name: Build and push Docker images
+name: Build and push Docker images (semver-only)
 
 on:
   push:
-    branches: [ main ]
+    # only run when a semantic-version tag is pushed, e.g. v1.2.3
+    tags: [ 'v*.*.*' ]
   workflow_dispatch:
-
 
 jobs:
   build-and-push:
@@ -13,39 +13,49 @@ jobs:
       contents: read
       packages: write
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # needed to access tags
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
+      - name: Set version (simple semver)
+        id: vars
+        shell: bash
+        run: |
+          # This workflow only runs for tag pushes (e.g. git tag v1.2.3 && git push origin v1.2.3)
+          # Extract the tag name (v1.2.3) and expose it as step output 'version'.
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "Building images for version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Build and push backend image
-      uses: docker/build-push-action@v4
-      with:
-        context: ./backend
-        file: ./backend/Dockerfile
-        push: true
-        platforms: linux/amd64,linux/arm64
-        tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-backend:latest
-          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-backend:${{ github.sha }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Build and push frontend image
-      uses: docker/build-push-action@v4
-      with:
-        context: ./frontend
-        file: ./frontend/Dockerfile
-        push: true
-        platforms: linux/amd64,linux/arm64
-        tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-frontend:latest
-          ${{ secrets.DOCKERHUB_USERNAME }}/full-stack-chatapp-frontend:${{ github.sha }}
+      - name: Build and push backend image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/chatapp-backend:${{ steps.vars.outputs.version }}
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/chatapp-frontend:${{ steps.vars.outputs.version }}
