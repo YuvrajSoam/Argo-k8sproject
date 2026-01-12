@@ -16,5 +16,7 @@ patches:
 - path: frontend/patch-env.yaml
 - path: backend/patch-replicas.yaml
 - path: frontend/patch-replicas.yaml
+- path: patch-pv-prod.yaml # patch PV name/path for prod
+- path: patch-pvc-prod.yaml # patch PVC name for prod
 
 namespace: chat-app-prod
