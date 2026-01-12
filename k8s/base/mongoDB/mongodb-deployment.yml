@@ -25,7 +25,3 @@ spec:
           value: mongoadmin
         - name: MONGO_INITDB_ROOT_PASSWORD
           value: secret
-      volumes:
-      - name: mongo-data
-        persistentVolumeClaim:
-          claimName: mongodb-pvc
