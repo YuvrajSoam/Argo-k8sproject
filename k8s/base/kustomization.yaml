@@ -4,4 +4,4 @@ resources:
 - ingress.yml
 - frontend
 - backend
-- mongodb
+- mongoDB
