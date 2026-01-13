@@ -1,5 +1,5 @@
 resources:
-- namespace.yml
+# namespace is created per-overlay
 - secrets.yml
 - ingress.yml
 - frontend

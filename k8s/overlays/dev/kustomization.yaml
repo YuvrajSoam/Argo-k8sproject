@@ -11,6 +11,7 @@
 # namespace: chat-app
 
 resources:
+- namespace.yml
 - ../../base
 - pv-pvc-dev.yaml
 

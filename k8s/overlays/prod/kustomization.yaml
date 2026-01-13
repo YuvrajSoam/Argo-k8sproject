@@ -9,6 +9,7 @@ kind: Kustomization
 # - ../../base/secrets.yaml
 
 resources:
+- namespace.yml
 - ../../base
 - pv-pvc-prod.yaml
 

@@ -1,9 +1,2 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: chat-app
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: chat-app-prod
+# Namespaces are created per-overlay to avoid conflicts
+# See: overlays/dev/namespace.yml and overlays/prod/namespace.yml
