@@ -10,6 +10,8 @@ annotations:
   argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd-image-updater-git-creds
   argocd-image-updater.argoproj.io/frontend.update-strategy: semver
   argocd-image-updater.argoproj.io/backend.update-strategy: semver
+  argocd-image-updater.argoproj.io/frontend.kustomize.image-name: frontend
+  argocd-image-updater.argoproj.io/backend.kustomize.image-name: backend
 
 spec:
   generators:
