@@ -3,16 +3,6 @@ kind: ApplicationSet
 metadata:
   name: chatapp-appset
   namespace: argocd
-annotations:
-  argocd-image-updater.argoproj.io/image-list: |
-    frontend=yuvrajsoam/chatapp-frontend
-    backend=yuvrajsoam/chatapp-backend
-  argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd-image-updater-git-creds
-  argocd-image-updater.argoproj.io/frontend.update-strategy: semver
-  argocd-image-updater.argoproj.io/backend.update-strategy: semver
-  argocd-image-updater.argoproj.io/frontend.kustomize.image-name: frontend
-  argocd-image-updater.argoproj.io/backend.kustomize.image-name: backend
-
 spec:
   generators:
   - list:
@@ -27,6 +17,15 @@ spec:
   template:
     metadata:
       name: chat-{{env}}
+      annotations:
+        argocd-image-updater.argoproj.io/image-list: |
+          chatapp-frontend=yuvrajsoam/chatapp-frontend
+          chatapp-backend=yuvrajsoam/chatapp-backend
+        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd-image-updater-git-creds
+        argocd-image-updater.argoproj.io/frontend.update-strategy: semver
+        argocd-image-updater.argoproj.io/backend.update-strategy: semver
+        # argocd-image-updater.argoproj.io/frontend.kustomize.image-name: chatapp-frontend
+        # argocd-image-updater.argoproj.io/backend.kustomize.image-name: chatapp-backend
     spec:
       project: chatapp-project
       source:

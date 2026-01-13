@@ -4,7 +4,7 @@ metadata:
   name: frontend
 spec:
   selector:
-    app: frontend
+    app: chatapp-frontend
   ports:
   - port: 80
     targetPort: 80

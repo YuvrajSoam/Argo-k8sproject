@@ -13,11 +13,9 @@ resources:
 - pv-pvc-prod.yaml
 
 images:
-- name: frontend
-  newName: yuvrajsoam/chatapp-frontend
+- name: yuvrajsoam/chatapp-frontend
   newTag: v1.0.0
-- name: backend
-  newName: yuvrajsoam/chatapp-backend
+- name: yuvrajsoam/chatapp-backend
   newTag: v1.0.0
 
 patches:
