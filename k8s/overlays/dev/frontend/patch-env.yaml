@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-      - name: chat-app-frontend
+      - name: chatapp-frontend
         env:
         - name: NODE_ENV
           value: development

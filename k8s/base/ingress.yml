@@ -5,10 +5,12 @@ metadata:
   labels:
     name: chatapp-ingress
   annotations:
-    # ngnix.ingress.kubernetes.io/readwrite-target: /
-    # ngnix.ingress.kubernetes.io/ssl-redirect: "false"
-
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
     traefik.ingress.kubernetes.io/router.entrypoints: web
+    # WebSocket support for Socket.io
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 spec:
   rules:
   - host: chattws.com
@@ -22,6 +24,13 @@ spec:
             port:
               number: 80
       - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 5001
+      - path: /socket.io
         pathType: Prefix
         backend:
           service:

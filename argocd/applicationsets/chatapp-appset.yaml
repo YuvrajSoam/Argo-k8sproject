@@ -18,14 +18,17 @@ spec:
     metadata:
       name: chat-{{env}}
       annotations:
-        argocd-image-updater.argoproj.io/image-list: |
-          chatapp-frontend=yuvrajsoam/chatapp-frontend
-          chatapp-backend=yuvrajsoam/chatapp-backend
-        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd-image-updater-git-creds
-        argocd-image-updater.argoproj.io/frontend.update-strategy: semver
+        # Image list: alias=image format, comma-separated (NOT multiline YAML)
+        argocd-image-updater.argoproj.io/image-list: backend=yuvrajsoam/chatapp-backend,frontend=yuvrajsoam/chatapp-frontend
+        # Update strategy for each alias
         argocd-image-updater.argoproj.io/backend.update-strategy: semver
-        # argocd-image-updater.argoproj.io/frontend.kustomize.image-name: chatapp-frontend
-        # argocd-image-updater.argoproj.io/backend.kustomize.image-name: chatapp-backend
+        argocd-image-updater.argoproj.io/frontend.update-strategy: semver
+        # Tell image updater which Kustomize image entry to update (must match 'name' in kustomization.yaml images block)
+        argocd-image-updater.argoproj.io/backend.kustomize.image-name: yuvrajsoam/chatapp-backend
+        argocd-image-updater.argoproj.io/frontend.kustomize.image-name: yuvrajsoam/chatapp-frontend
+        # Write-back method: commit changes to Git (format: git:secret:namespace/secret-name)
+        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/argocd-image-updater-git-creds
+        argocd-image-updater.argoproj.io/git-branch: main
     spec:
       project: chatapp-project
       source:

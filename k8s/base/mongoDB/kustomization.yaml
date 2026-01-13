@@ -1,8 +1,7 @@
 resources:
 - mongodb-deployment.yml
 - mongodb-service.yml
-- mongodb-pv.yml
-- mongodb-pvc.yml
+# PV/PVC are created in overlays (dev/prod specific)
 
 commonLabels:
   app: mongodb
