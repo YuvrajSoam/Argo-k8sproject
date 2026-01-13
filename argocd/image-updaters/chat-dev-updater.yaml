@@ -1,0 +1,33 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: chat-dev-updater
+  namespace: argocd
+spec:
+  # Target the ArgoCD Application
+  applicationRef:
+    name: chat-dev
+  
+  # Images to track
+  images:
+  - name: backend
+    image: yuvrajsoam/chatapp-backend
+    updateStrategy: semver
+    kustomize:
+      imageName: yuvrajsoam/chatapp-backend
+  - name: frontend
+    image: yuvrajsoam/chatapp-frontend
+    updateStrategy: semver
+    kustomize:
+      imageName: yuvrajsoam/chatapp-frontend
+  
+  # Git write-back configuration
+  git:
+    writeBackMethod: git
+    writeBackTarget: kustomization
+    branch: main
+    credentials:
+      secretRef:
+        name: argocd-image-updater-git-creds
+        namespace: argocd
+
