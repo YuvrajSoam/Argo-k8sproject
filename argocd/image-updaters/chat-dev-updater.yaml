@@ -4,28 +4,26 @@ metadata:
   name: chat-dev-updater
   namespace: argocd
 spec:
+  # Required: namespace where ArgoCD Applications are
   namespace: argocd
+  
+  # Global write-back configuration (at top level, not inside applicationRefs)
+  writeBackConfig:
+    method: git
+    git:
+      branch: main
+      credentials:
+        secretRef:
+          name: argocd-image-updater-git-creds
+          namespace: argocd
+  
+  # Required: list of applications to manage
   applicationRefs:
     - namePattern: "chat-dev"
       images:
         - alias: "backend"
           imageName: "yuvrajsoam/chatapp-backend"
-          commonUpdateSettings:
-            updateStrategy: "semver"
-          kustomizeSettings:
-            kustomizationPath: "k8s/overlays/dev"
-            newTagFieldName: "newTag"
+          updateStrategy: semver
         - alias: "frontend"
           imageName: "yuvrajsoam/chatapp-frontend"
-          commonUpdateSettings:
-            updateStrategy: "semver"
-          kustomizeSettings:
-            kustomizationPath: "k8s/overlays/dev"
-            newTagFieldName: "newTag"
-      git:
-        writeBackMethod: "git"
-        branch: "main"
-        credentials:
-          secretRef:
-            name: argocd-image-updater-git-creds
-            namespace: argocd
+          updateStrategy: semver
